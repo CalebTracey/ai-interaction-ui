@@ -7,11 +7,11 @@ interface Props {
   placeHolder: string
 }
 
-export const PromptInput = (props: Props): JSX.Element => {
+export const InputForm = (props: Props): JSX.Element => {
   const { isLoading, setPrompt, placeHolder } = props
 
   const handleOnChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): (() => void) => {
     const timer = setTimeout(() => {
       setPrompt(e.target.value)
@@ -21,16 +21,14 @@ export const PromptInput = (props: Props): JSX.Element => {
   }
 
   return (
-    <Form>
-      <Form.Group>
-        <Form.Label>Tell the AI what you want</Form.Label>
-      </Form.Group>
+    <Form.Group className={'inputForm'} controlId='formInput.ControlInput_0'>
       <Form.Control
         onChange={handleOnChange}
-        type="text"
-        size="lg"
+        as='input'
+        type='text'
+        // style={{ backgroundColor: '#181a1b' }}
         placeholder={placeHolder}
       />
-    </Form>
+    </Form.Group>
   )
 }

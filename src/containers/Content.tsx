@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Alert, Spinner } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import { ImageListContainer, urlI } from './ImageListContainer'
-import { InputContainer } from './InputContainer'
+import { InputFormContainer } from './InputFormContainer'
+import { GrowSpinner } from '../components/GrowSpinner'
 
-const placeholder = 'Two cats playing guitar on the moon'
+const placeholder = 'What would you like an image of?'
 const url = 'http://localhost:8080/v1/image'
 
 const defaultSize = '1024x1024'
@@ -50,18 +51,19 @@ export const Content = (): JSX.Element => {
     })
   }
 
+  const handleClear = (): void => {
+    console.log('cleared')
+  }
+
   return (
     <div className='content'>
-      {isLoading ? (
-        <Spinner animation='grow' />
-      ) : (
-        <ImageListContainer images={response} />
-      )}
-      <InputContainer
+      {isLoading ? <GrowSpinner /> : <ImageListContainer images={response} />}
+      <InputFormContainer
         response={response}
         isLoading={isLoading}
         setPrompt={setPrompt}
         handleSubmit={handleSubmit}
+        handleClear={handleClear}
         placeholder={placeholder}
       />
     </div>

@@ -9,11 +9,19 @@ interface Props {
   response: urlI[] | undefined
   setPrompt: Dispatch<SetStateAction<string>>
   handleSubmit: () => void
+  handleClear: () => void
   placeholder: string
 }
 
-export const InputContainer = (props: Props): JSX.Element => {
-  const { isLoading, response, setPrompt, handleSubmit, placeholder } = props
+export const InputFormContainer = (props: Props): JSX.Element => {
+  const {
+    isLoading,
+    response,
+    setPrompt,
+    handleSubmit,
+    handleClear,
+    placeholder,
+  } = props
   const [respCount, setRespCount] = useState(0)
 
   useEffect(() => {
@@ -23,21 +31,37 @@ export const InputContainer = (props: Props): JSX.Element => {
   }, [response])
 
   return (
-    <Stack gap={3} className='grid-container__input align-items-center'>
+    <Stack
+      gap={3}
+      className='grid-container__input grid-middle align-items-center'
+    >
       <InputForm
         isLoading={isLoading}
         setPrompt={setPrompt}
         placeHolder={placeholder}
       />
       {!isLoading && respCount > 0 ? <Button>Download</Button> : null}
-      <Button
-        onClick={handleSubmit}
-        className='m-5'
-        variant='outline-primary'
-        disabled={isLoading}
-      >
-        Submit
-      </Button>
+      {respCount === 0 ? (
+        <Button
+          onClick={handleSubmit}
+          style={{ width: '10%' }}
+          className='m-5'
+          variant='outline-primary'
+          disabled={isLoading}
+        >
+          Submit
+        </Button>
+      ) : (
+        <Button
+          onClick={handleClear}
+          style={{ width: '10%' }}
+          className='m-5'
+          variant='outline-primary'
+          disabled={isLoading}
+        >
+          Clear
+        </Button>
+      )}
     </Stack>
   )
 }

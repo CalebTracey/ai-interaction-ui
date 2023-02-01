@@ -1,35 +1,53 @@
+
 @use '~bootstrap/scss/bootstrap.scss';
 
+//$bg-color: #181a1b;
+//overrides
+
 $lineSize: 5rem;
+
+.app {
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+}
 
 .spacer {
   margin-top: 40vh;
 }
 
-.content {
-  height: 100vh;
-  grid-template-rows: 50% 50%;
-  //column-gap: $lineSize;
-  //row-gap: $lineSize;
-  display: grid;
+.grid-middle {
+  grid-column-start: 2;
+  grid-column-end: 4;
 }
 
-//
-//.grid-stack {
-//  grid-column-start: 1;
-//  grid-column-end: 4;
-//  grid-row-start: 5;
-//  grid-row-end: 8;
-//}
+.content {
+  //background-color: $bg-color;
+  height: 100%;
+  width: 100%;
+  // grid-template-rows: 50% 50%;
+  display: grid;
+  grid-template-columns: 15% 35% 35% 15%;
+  grid-template-rows: 50% 50%;
+}
 
-.image-list-container {
-  justify-content: space-around;
+.flex-container-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-container {
+  justify-content: space-evenly;
   overflow: scroll;
   display: flex;
-  grid-gap: 5rem;
-  padding: 3rem;
-  //  grid-column-start: 1;
-  //  grid-column-end: 4;
-  //  grid-row-start: 1;
-  //  grid-row-end: 5;
+  padding: 2rem;
+
+  &__input {
+    justify-content: flex-start;
+  }
+}
+
+.inputForm {
+  width: 30%;
 }

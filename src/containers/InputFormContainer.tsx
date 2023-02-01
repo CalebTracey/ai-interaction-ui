@@ -2,11 +2,10 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import Stack from 'react-bootstrap/Stack'
 import { Button } from 'react-bootstrap'
 import { urlI } from './ImageListContainer'
-import { PromptInput } from '../components/PromptInput'
+import { InputForm } from '../components/InputForm'
 
 interface Props {
   isLoading: boolean
-
   response: urlI[] | undefined
   setPrompt: Dispatch<SetStateAction<string>>
   handleSubmit: () => void
@@ -24,8 +23,8 @@ export const InputContainer = (props: Props): JSX.Element => {
   }, [response])
 
   return (
-    <Stack gap={3} className='align-items-center col-lg-5 mx-auto'>
-      <PromptInput
+    <Stack gap={3} className='grid-container__input align-items-center'>
+      <InputForm
         isLoading={isLoading}
         setPrompt={setPrompt}
         placeHolder={placeholder}
@@ -33,7 +32,7 @@ export const InputContainer = (props: Props): JSX.Element => {
       {!isLoading && respCount > 0 ? <Button>Download</Button> : null}
       <Button
         onClick={handleSubmit}
-        className='w-25 m-5 mx-auto'
+        className='m-5'
         variant='outline-primary'
         disabled={isLoading}
       >

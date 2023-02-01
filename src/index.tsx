@@ -1,20 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./scss/custom.scss";
-import App from "./App";
-import { DevSupport } from "@react-buddy/ide-toolbox";
-import { ComponentPreviews, useInitial } from "./dev";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './scss/custom.scss'
+import App from './App'
+import { DevSupport } from '@react-buddy/ide-toolbox'
+import { ComponentPreviews, useInitial } from './dev'
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
-  <React.StrictMode>
-    <DevSupport
-      ComponentPreviews={ComponentPreviews}
-      useInitialHook={useInitial}
-    >
-      <App />
-    </DevSupport>
-  </React.StrictMode>
-);
+    <React.StrictMode>
+        <DevSupport
+            ComponentPreviews={ComponentPreviews}
+            useInitialHook={useInitial}
+        >
+            <App />
+        </DevSupport>
+    </React.StrictMode>
+)

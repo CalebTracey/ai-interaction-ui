@@ -1,8 +1,35 @@
 @use '~bootstrap/scss/bootstrap.scss';
 
+$lineSize: 5rem;
 
 .spacer {
   margin-top: 40vh;
 }
 
+.content {
+  height: 100vh;
+  grid-template-rows: 50% 50%;
+  //column-gap: $lineSize;
+  //row-gap: $lineSize;
+  display: grid;
+}
 
+//
+//.grid-stack {
+//  grid-column-start: 1;
+//  grid-column-end: 4;
+//  grid-row-start: 5;
+//  grid-row-end: 8;
+//}
+
+.image-list-container {
+  justify-content: space-around;
+  overflow: scroll;
+  display: flex;
+  grid-gap: 5rem;
+  padding: 3rem;
+  //  grid-column-start: 1;
+  //  grid-column-end: 4;
+  //  grid-row-start: 1;
+  //  grid-row-end: 5;
+}

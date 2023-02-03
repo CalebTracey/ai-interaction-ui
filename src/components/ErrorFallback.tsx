@@ -1,16 +1,16 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { FallbackProps } from 'react-error-boundary'
 
 export const ErrorFallback: FC<FallbackProps> = (props: FallbackProps): any => {
   const { error, resetErrorBoundary } = props
-  const [show, setShow] = useState(true)
+  // const [show, setShow] = useState(true)
 
   const handleClose = (): void => {
     console.error('=== ERROR FALLBACK ===')
     resetErrorBoundary()
   }
-  return show ? (
+  return (
     <div
       className='error-fallback modal show grid-half'
       style={{ display: 'block', position: 'initial' }}
@@ -33,5 +33,5 @@ export const ErrorFallback: FC<FallbackProps> = (props: FallbackProps): any => {
         </Modal.Footer>
       </Modal.Dialog>
     </div>
-  ) : null
+  )
 }

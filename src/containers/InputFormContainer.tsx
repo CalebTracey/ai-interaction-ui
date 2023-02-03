@@ -1,44 +1,49 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap'
+import React, {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react'
 import { InputForm } from '../components/InputForm'
-import DownloadButton from '../components/buttons/DownloadButton'
-import Handler from '../services/Handler'
+
 interface Props {
   isLoading: boolean
-  response: ResultI | undefined
+  result: ResultI | undefined
   setPrompt: Dispatch<SetStateAction<string>>
-  handleSubmit: () => void
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void
   setIsLoading: Dispatch<SetStateAction<boolean>>
-  setResponse: Dispatch<SetStateAction<ResultI | undefined>>
+  setResult: Dispatch<SetStateAction<ResultI | undefined>>
   placeholder: string
 }
 
 export const InputFormContainer = (props: Props): JSX.Element => {
   const {
     isLoading,
-    response,
+    result,
     setPrompt,
     handleSubmit,
     setIsLoading,
-    setResponse,
+    setResult,
     placeholder,
   } = props
 
   const [respCount, setRespCount] = useState(0)
 
   useEffect(() => {
-    if (response && response?.data) {
-      if (response?.data.length !== null) {
-        setRespCount(response.data.length)
+    if (result && result?.data) {
+      if (result?.data.length !== null) {
+        setRespCount(result.data.length)
       }
     }
-  }, [response])
+  }, [result])
 
   return (
-    <div className='grid-container__input grid-half align-items-center'>
+    <div className='grid-half__input align-items-center'>
       <InputForm
+        result={result}
         setIsLoading={setIsLoading}
-        setResponse={setResponse}
+        setResult={setResult}
         respCount={respCount}
         isLoading={isLoading}
         setPrompt={setPrompt}

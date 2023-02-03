@@ -1,9 +1,9 @@
 import { placeholder } from '../containers/Content'
 
 const Clear = (props: ClearI): void => {
-  const { setPrompt, setResponse, setIsLoading } = props
+  const { setPrompt, setResult, setIsLoading } = props
   setPrompt(placeholder)
-  setResponse([])
+  setResult([])
   setIsLoading(false)
 
   console.log('cleared')

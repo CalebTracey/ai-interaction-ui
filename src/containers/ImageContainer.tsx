@@ -10,7 +10,7 @@ export const ImageContainer = (props: Props): JSX.Element => {
 
   return (
     <div className='image-item'>
-      <Image className='img-container' thumbnail={true} src={src} />
+      <Image className='image-container' thumbnail={true} src={src} />
     </div>
   )
 }

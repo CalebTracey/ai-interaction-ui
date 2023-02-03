@@ -10,7 +10,7 @@ declare interface RequestI {
 
 declare interface ClearI {
   setPrompt: Dispatch<SetStateAction<string>>
-  setResponse: Dispatch<SetStateAction<UrlI[]>>
+  setResult: Dispatch<SetStateAction<ResultI>>
   setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 

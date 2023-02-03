@@ -1,5 +1,5 @@
 import React from 'react'
-import { Content } from './containers/Content'
+import { Content } from './containers/ContentContainer'
 
 const App = (): JSX.Element => {
   return (

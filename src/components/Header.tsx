@@ -1,15 +1,12 @@
 import React from 'react'
-import HeaderItemContainer from '../containers/HeaderItemContainer'
 
 const Header = (): JSX.Element => {
   return (
     <header className='header'>
       <div className='header-content'>
-        <HeaderItemContainer>
-          {/* <div> */}
+        <div className='header-item-container'>
           <span>AI Image Generation</span>
-          {/* </div> */}
-        </HeaderItemContainer>
+        </div>
       </div>
     </header>
   )

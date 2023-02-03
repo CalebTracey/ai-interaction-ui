@@ -1,3 +1,5 @@
+declare type AlertT = { type: 'success' | 'danger'; message: string }
+
 declare interface UrlI {
   url: string
 }
@@ -14,8 +16,6 @@ declare interface ClearI {
   setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
-declare type AlertT = { type: 'success' | 'danger'; message: string }
-
 declare interface ResponseI {
   result: ResultI | null
   message: MessageI
@@ -27,16 +27,18 @@ declare interface ResultI {
 }
 
 declare interface MessageI {
-  ErrorLog: TErrorLogs
- Status: string
-  Count: string
+  errorLog: TErrorLogs
+  status: string
+  count: string
 }
 
 declare type TErrorLogs = ErrorLogI[]
 
 declare interface ErrorLogI {
-  Scope: string
-  StatusCode: string
-  RootCause: string
-  Trace: string
+  scope: string
+  statusCode: string
+  rootCause: string
+  trace: string
 }
+
+declare interface

@@ -14,7 +14,7 @@ const SubmitButton = (props: Props): JSX.Element => {
       type='submit'
       disabled={isLoading}
     >
-      Submit
+      <span>Submit</span>
     </Button>
   )
 }

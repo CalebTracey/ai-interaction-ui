@@ -7,11 +7,13 @@ import { ErrorFallback } from '../components/ErrorFallback'
 import ResultsContainer from './ResultsContainer'
 import Header from '../components/Header'
 
-export const placeholder = 'What would you like an image of?'
+const placeholder = 'Two bears fighting aliens with light sabers'
 const defaultSize = '1024x1024'
+const defaultCount = 1
+const tenSeconds = 10000
 
 export const Content = (): JSX.Element => {
-  const [prompt, setPrompt] = useState<string>(placeholder)
+  const [prompt, setPrompt] = useState<string>('')
   const [result, setResult] = useState<ResultI | undefined>(undefined)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [alert, setAlert] = useState<AlertT | null>(null)
@@ -27,7 +29,7 @@ export const Content = (): JSX.Element => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setAlert(null)
-    }, 10000)
+    }, tenSeconds)
 
     return () => clearTimeout(timer)
   }, [alert])
@@ -35,25 +37,26 @@ export const Content = (): JSX.Element => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
     console.log('=== SUBMITTED ===')
-    const req: RequestI = { n: 2, prompt, size: defaultSize }
+
+    const req: RequestI = { n: defaultCount, prompt, size: defaultSize }
+
     setIsLoading(true)
 
-    Service.Post({ request: req })
+    const s = Service.Post({ request: req })
       .then((res: ResponseI | undefined) => {
         if (res?.result) {
           if (res.result.data.length == 0) {
+            // is this sketchy?
+            setResult(undefined)
             setAlert({ type: 'danger', message: 'None found!' })
-            console.info('no results')
-            return
           }
           setResult(res.result)
-          console.log('Response: ' + res.result)
           setAlert({ type: 'success', message: 'Success!' })
         }
-        return
       })
       .finally(() => setIsLoading(false))
-    return
+
+    return e.currentTarget.reset()
   }
 
   return (
@@ -72,6 +75,7 @@ export const Content = (): JSX.Element => {
           result={result}
           isLoading={isLoading}
           setPrompt={setPrompt}
+          prompt={prompt}
           handleSubmit={handleSubmit}
           placeholder={placeholder}
         />

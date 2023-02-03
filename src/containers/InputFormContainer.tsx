@@ -10,6 +10,7 @@ import { InputForm } from '../components/InputForm'
 interface Props {
   isLoading: boolean
   result: ResultI | undefined
+  prompt: string
   setPrompt: Dispatch<SetStateAction<string>>
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void
   setIsLoading: Dispatch<SetStateAction<boolean>>
@@ -22,6 +23,7 @@ export const InputFormContainer = (props: Props): JSX.Element => {
     isLoading,
     result,
     setPrompt,
+    prompt,
     handleSubmit,
     setIsLoading,
     setResult,
@@ -46,8 +48,9 @@ export const InputFormContainer = (props: Props): JSX.Element => {
         setResult={setResult}
         respCount={respCount}
         isLoading={isLoading}
+        prompt={prompt}
         setPrompt={setPrompt}
-        placeHolder={placeholder}
+        placeholder={placeholder}
         handleSubmit={handleSubmit}
       />
     </div>

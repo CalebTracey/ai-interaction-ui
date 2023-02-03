@@ -3,6 +3,10 @@
 $filter-color: #004daa;
 $text-color: #e8e6e3;
 
+$beige-color: #E3E7D3;
+$spanish-grey-color: #989C94;
+//BDC2BF - nice grey
+
 $text-color-dark: rgba($text-color, 0.9);
 
 $primary-color: #181a1b;
@@ -20,7 +24,8 @@ $border-color-dark: rgba(white, 0.075);
 $border-light: 1px solid $border-color-light;
 $border-dark: 1px solid $border-color-dark;
 
-$header-font-color: rgba($text-color, 0.75);
+// $header-font-color: rgba($text-color, 0.75);
+$header-font-color: #ACC3A6;
 
 %header-text {
   font-size: 1.25rem;
@@ -202,8 +207,8 @@ img {
 }
 
 .image-item {
+  @extend %max-size;
   min-width: 0;
-  height: 100%;
   display: flex;
   justify-content: center;
 }

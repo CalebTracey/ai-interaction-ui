@@ -9,7 +9,7 @@ const DownloadButton = (props: Props): JSX.Element => {
   const { result } = props
   return (
     <Button className='form-button' variant='dark'>
-      Download
+      <span>Download</span>
     </Button>
   )
 }

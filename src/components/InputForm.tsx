@@ -1,5 +1,11 @@
-import React, { ChangeEvent, SetStateAction, Dispatch, FormEvent } from 'react'
-import { Dropdown, DropdownButton, Form, InputGroup } from 'react-bootstrap'
+import React, {
+  ChangeEvent,
+  SetStateAction,
+  Dispatch,
+  FormEvent,
+  useState,
+} from 'react'
+import { Form, InputGroup } from 'react-bootstrap'
 import Handler from '../services/Handler'
 import ClearButton from './buttons/ClearButton'
 import DownloadButton from './buttons/DownloadButton'
@@ -9,8 +15,9 @@ interface Props {
   result: ResultI | undefined
   respCount: number
   isLoading: boolean
+  prompt: string
   setPrompt: (str: string) => void
-  placeHolder: string
+  placeholder: string
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void
   setIsLoading: Dispatch<SetStateAction<boolean>>
   setResult: Dispatch<SetStateAction<ResultI | undefined>>
@@ -22,7 +29,8 @@ export const InputForm = (props: Props): JSX.Element => {
     result,
     isLoading,
     setPrompt,
-    placeHolder,
+    placeholder,
+    prompt,
     handleSubmit,
     setIsLoading,
     setResult,
@@ -52,36 +60,31 @@ export const InputForm = (props: Props): JSX.Element => {
       <InputGroup>
         <Form.FloatingLabel
           controlId='floatingInput'
-          label='What image would you like to see?'
+          label='What would you like to see?'
           className='floating-label'
         >
           <Form.Control
             onChange={handleOnChange}
             as='input'
             type='text'
-            placeholder={placeHolder}
+            name='prompt'
+            placeholder={placeholder}
           />
         </Form.FloatingLabel>
-        {respCount === 0 ? (
-          <SubmitButton isLoading={isLoading} />
-        ) : isLoading ? null : (
-          <>
-            <ClearButton clearHandler={handleClear} />
-            <DownloadButton result={result} />
-            {/* <DropdownButton
-              variant='outline-secondary'
-              title=''
-              id='input-group-dropdown-1'
-            > */}
-            {/* <Dropdown.Item>
-                <span>Clear</span>
-              </Dropdown.Item> */}
-            {/* <Dropdown.Item>
-                <span>Download</span>
-              </Dropdown.Item>
-            </DropdownButton> */}
-          </>
-        )}
+        <>
+          {respCount === 0 ? <SubmitButton isLoading={isLoading} /> : null}
+          {console.log('=== RESP COUNT: ' + respCount)}
+          {respCount !== undefined ? (
+            <>
+              {respCount > 0 ? (
+                <ClearButton clearHandler={handleClear} />
+              ) : null}
+              {respCount > 0 && !isLoading ? (
+                <DownloadButton result={result} />
+              ) : null}
+            </>
+          ) : null}
+        </>
       </InputGroup>
     </Form>
   )

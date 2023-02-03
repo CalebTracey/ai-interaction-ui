@@ -1,71 +1,99 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { Alert } from 'react-bootstrap'
-import { ImageListContainer, urlI } from './ImageListContainer'
 import { InputFormContainer } from './InputFormContainer'
 import { GrowSpinner } from '../components/GrowSpinner'
+import ImageListContainer from './ImageListContainer'
+import Service from '../services/Service'
+import { AxiosResponse } from 'axios'
+import { type } from 'os'
+import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorFallback } from '../components/ErrorFallback'
+import { ImageList } from '../components/ImageList'
 
-const placeholder = 'What would you like an image of?'
-const url = 'http://localhost:8080/v1/image'
-
+export const placeholder = 'What would you like an image of?'
 const defaultSize = '1024x1024'
-
-interface requestI {
-  n: number
-  prompt: string
-  size: string
-}
 
 export const Content = (): JSX.Element => {
   const [prompt, setPrompt] = useState<string>(placeholder)
-  const [response, setResponse] = useState<urlI[]>([])
+  const [response, setResponse] = useState<ResultI | undefined>(undefined)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [alert, setAlert] = useState<AlertT | null>(null)
 
-  const responseAlert = (
-    key: string,
-    variant: 'success' | 'danger',
-  ): JSX.Element => (
-    <Alert key={key} variant={variant}>
-      success
-    </Alert>
-  )
-
-  const handlePostRequest = async (): Promise<any> => {
-    const request: requestI = { n: 2, prompt, size: defaultSize }
-    return axios
-      .post(url, request)
-      .then((res) => {
-        setResponse(res.data)
-        responseAlert('success', 'success')
-      })
-      .catch((err) => {
-        console.error(err.message)
-        responseAlert(err.message, 'danger')
-      })
+  const responseAlert = (key: string, variant: string): JSX.Element => {
+    return (
+      <Alert key={key} variant={variant}>
+        <span>success</span>
+      </Alert>
+    )
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAlert(null)
+    }, 10000)
+
+    return () => clearTimeout(timer)
+  }, [alert])
 
   const handleSubmit = (): void => {
+    console.log('=== SUBMITTED ===')
+    const req: RequestI = { n: 2, prompt, size: defaultSize }
     setIsLoading(true)
-    handlePostRequest().then(() => {
-      setIsLoading(false)
-    })
-  }
 
-  const handleClear = (): void => {
-    console.log('cleared')
+    Service.Post({ request: req })
+      .then((res: ResponseI | undefined) => {
+        if (res?.result) {
+          if (res.result.data.length == 0) {
+            setAlert({ type: 'danger', message: 'Success!' })
+            console.info('no results')
+            return
+          }
+          // setResponse()
+          // const t =
+          setResponse(res.result)
+          console.log('Response: ' + res.result)
+          setAlert({ type: 'success', message: 'Success!' })
+          // if (res.message.ErrorLog.length !== 0) {
+          //   setAlert({
+          //     type: 'danger',
+          //     message: res.message.ErrorLog[0].RootCause,
+          //   })
+          //   setIsLoading(false)
+          //   return
+          // }
+        }
+        return
+      })
+      .finally(() => setIsLoading(false))
+    return
   }
 
   return (
-    <div className='content'>
-      {isLoading ? <GrowSpinner /> : <ImageListContainer images={response} />}
-      <InputFormContainer
-        response={response}
-        isLoading={isLoading}
-        setPrompt={setPrompt}
-        handleSubmit={handleSubmit}
-        handleClear={handleClear}
-        placeholder={placeholder}
-      />
+    <div className='content container'>
+      <div className=' grid-half'>
+        {alert ? responseAlert(alert.type, alert.message) : null}
+
+        {isLoading ? (
+          <GrowSpinner />
+        ) : (
+          <ImageList images={response?.data} />
+          // <ImageListContainer images={response?.data} />
+        )}
+        {/* <GrowSpinner /> */}
+      </div>
+
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <InputFormContainer
+          setIsLoading={setIsLoading}
+          setResponse={setResponse}
+          response={response}
+          isLoading={isLoading}
+          setPrompt={setPrompt}
+          handleSubmit={handleSubmit}
+          // handleClear={}
+          placeholder={placeholder}
+        />
+      </ErrorBoundary>
     </div>
   )
 }

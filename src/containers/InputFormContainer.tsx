@@ -1,15 +1,15 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import Stack from 'react-bootstrap/Stack'
 import { Button } from 'react-bootstrap'
-import { urlI } from './ImageListContainer'
 import { InputForm } from '../components/InputForm'
-
+import DownloadButton from '../components/buttons/DownloadButton'
+import Handler from '../services/Handler'
 interface Props {
   isLoading: boolean
-  response: urlI[] | undefined
+  response: ResultI | undefined
   setPrompt: Dispatch<SetStateAction<string>>
   handleSubmit: () => void
-  handleClear: () => void
+  setIsLoading: Dispatch<SetStateAction<boolean>>
+  setResponse: Dispatch<SetStateAction<ResultI | undefined>>
   placeholder: string
 }
 
@@ -19,49 +19,32 @@ export const InputFormContainer = (props: Props): JSX.Element => {
     response,
     setPrompt,
     handleSubmit,
-    handleClear,
+    setIsLoading,
+    setResponse,
     placeholder,
   } = props
+
   const [respCount, setRespCount] = useState(0)
 
   useEffect(() => {
-    if (response?.length !== undefined) {
-      setRespCount(response.length)
+    if (response && response?.data) {
+      if (response?.data.length !== null) {
+        setRespCount(response.data.length)
+      }
     }
   }, [response])
 
   return (
-    <Stack
-      gap={3}
-      className='grid-container__input grid-middle align-items-center'
-    >
+    <div className='grid-container__input grid-half align-items-center'>
       <InputForm
+        setIsLoading={setIsLoading}
+        setResponse={setResponse}
+        respCount={respCount}
         isLoading={isLoading}
         setPrompt={setPrompt}
         placeHolder={placeholder}
+        handleSubmit={handleSubmit}
       />
-      {!isLoading && respCount > 0 ? <Button>Download</Button> : null}
-      {respCount === 0 ? (
-        <Button
-          onClick={handleSubmit}
-          style={{ width: '10%' }}
-          className='m-5'
-          variant='outline-primary'
-          disabled={isLoading}
-        >
-          Submit
-        </Button>
-      ) : (
-        <Button
-          onClick={handleClear}
-          style={{ width: '10%' }}
-          className='m-5'
-          variant='outline-primary'
-          disabled={isLoading}
-        >
-          Clear
-        </Button>
-      )}
-    </Stack>
+    </div>
   )
 }

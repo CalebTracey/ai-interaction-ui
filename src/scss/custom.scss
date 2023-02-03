@@ -1,10 +1,13 @@
-
-@use '~bootstrap/scss/bootstrap.scss';
+@use "~bootstrap/scss/bootstrap.scss";
 
 //$bg-color: #181a1b;
 //overrides
 
 $lineSize: 5rem;
+
+img {
+  max-width: 100%;
+}
 
 .app {
   height: 100vh;
@@ -16,18 +19,21 @@ $lineSize: 5rem;
   margin-top: 40vh;
 }
 
-.grid-middle {
-  grid-column-start: 2;
-  grid-column-end: 4;
+.grid-half {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  // grid-template-rows: 50%;
+  &__content {
+  }
 }
 
 .content {
-  //background-color: $bg-color;
   height: 100%;
   width: 100%;
-  // grid-template-rows: 50% 50%;
   display: grid;
-  grid-template-columns: 15% 35% 35% 15%;
+  gap: 1.5rem;
+  grid-template-rows: repeat(2, 1fr);
+  // grid-template-columns: 5% 45% 45% 5%;
   grid-template-rows: 50% 50%;
 }
 
@@ -35,6 +41,9 @@ $lineSize: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  grid-column: 2/4;
+  grid-row: 1/4
+
 }
 
 .grid-container {
@@ -42,12 +51,64 @@ $lineSize: 5rem;
   overflow: scroll;
   display: flex;
   padding: 2rem;
+  // grid-row-start: 1;
 
   &__input {
     justify-content: flex-start;
+    // grid-row-start: 3;
   }
 }
 
 .inputForm {
-  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.floating-label {
+  // display: flex;
+  // flex-direction: column;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  display: grid;
+}
+
+.form-ctrl {
+  grid-column: 1 /4;
+}
+
+.error-fallback {
+  display: flex;
+  align-items: center;
+}
+
+.form-input-container {
+  grid-column: 2 / 4;
+  margin-top: 0;
+  margin-bottom: auto;
+  height: 100%;
+}
+
+.form-button {
+  grid-column: 2;
+  margin-top: 5rem;
+}
+
+.image-list-container {
+  // display: flex;
+  // grid-column: 1/5;
+}
+
+.image-list {
+  display: flex;
+  // display: grid;
+// grid-template-columns: repeat(4, 1fr);
+  grid-column: 1/5;
+}
+
+.image-item {
+  padding: 3rem;
+  // align-content: center;
+  // display: grid;
+  scale: 50%;
 }

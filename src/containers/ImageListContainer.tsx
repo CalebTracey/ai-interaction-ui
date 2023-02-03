@@ -1,26 +1,23 @@
 import React from 'react'
-import { Image } from 'react-bootstrap'
-import { testImages } from '../testdata/images'
-export interface urlI {
-  url: string
-}
+import { ImageList } from '../components/ImageList'
+
 interface Props {
-  images: urlI[] | undefined
+  images: UrlI[] | undefined | null
 }
 
-export const ImageListContainer = (props: Props): JSX.Element | null => {
-  let { images } = props
+const ImageListContainer = (props: Props): JSX.Element | null => {
+  const { images } = props
+  if (images === undefined || images === null) {
+    return null
+  }
 
-  // if (images === undefined) {
-  //   images = testImages
-  //   return null
-  // }
-  images = testImages
   return (
-    <div className='grid-container grid-middle'>
-      {images.map((img) => (
-        <Image thumbnail={true} key={img.url} src={img.url} />
-      ))}
+    // <div className='image-list-container'>
+    <div className='container'>
+      {images ? <ImageList images={images} /> : null}
     </div>
+    // </div>
   )
 }
+
+export default ImageListContainer

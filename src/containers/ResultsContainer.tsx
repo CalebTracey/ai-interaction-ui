@@ -9,17 +9,17 @@ interface Props {
   showAlert: (type: string, message: string) => void
 }
 
-const ResultsContainer = (props: Props): JSX.Element => {
+const ResultsContainer = (props: Props): JSX.Element | null => {
   const { isLoading, alert, result, showAlert } = props
-  return (
-    <div className='grid-half__content'>
+  return result ? (
+    <div id='results-container' className='grid-half__content'>
       <>
         {alert ? showAlert(alert.type, alert.message) : null}
 
         {isLoading ? <GrowSpinner /> : <ImageList images={result?.data} />}
       </>
     </div>
-  )
+  ) : null
 }
 
 export default ResultsContainer

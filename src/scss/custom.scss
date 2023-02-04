@@ -3,8 +3,8 @@
 $filter-color: #004daa;
 $text-color: #e8e6e3;
 
-$beige-color: #E3E7D3;
-$spanish-grey-color: #989C94;
+$beige-color: #e3e7d3;
+$spanish-grey-color: #989c94;
 //BDC2BF - nice grey
 
 $text-color-dark: rgba($text-color, 0.9);
@@ -25,7 +25,7 @@ $border-light: 1px solid $border-color-light;
 $border-dark: 1px solid $border-color-dark;
 
 // $header-font-color: rgba($text-color, 0.75);
-$header-font-color: #ACC3A6;
+$header-font-color: #acc3a6;
 
 %header-text {
   font-size: 1.25rem;
@@ -95,7 +95,7 @@ img {
 .content {
   @extend %max-size;
   display: grid;
-  gap: 1.5rem;
+  overflow: scroll;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 3rem calc(50% - 3rem) calc(50% - 3rem);
 }
@@ -113,7 +113,7 @@ img {
   grid-template-columns: repeat(4, 1fr);
 
   &__content {
-    grid-row: 2;
+    grid-row: 4;
     grid-column: 1/ 5;
   }
 
@@ -121,6 +121,13 @@ img {
     grid-row: 3;
     grid-column: 2/4;
   }
+}
+
+.upper-content {
+  grid-row: 2;
+  grid-column: 1/5;
+  place-content: center;
+  display: grid;
 }
 
 .flex-container-centered {
@@ -136,6 +143,10 @@ img {
   margin-bottom: auto;
   height: 100%;
   padding: 0 6rem 0 6rem;
+  display: grid;
+  place-content: baseline;
+  grid-gap: 2rem;
+  justify-content: center;
 }
 
 //      ==================
@@ -211,4 +222,8 @@ img {
   min-width: 0;
   display: flex;
   justify-content: center;
+}
+
+.scroll-button {
+  margin: 30%;
 }

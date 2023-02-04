@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useState,
 } from 'react'
+import { Button } from 'react-bootstrap'
 import { InputForm } from '../components/InputForm'
 
 interface Props {
@@ -47,6 +48,7 @@ export const InputFormContainer = (props: Props): JSX.Element => {
         setIsLoading={setIsLoading}
         setResult={setResult}
         respCount={respCount}
+        setRespCount={setRespCount}
         isLoading={isLoading}
         prompt={prompt}
         setPrompt={setPrompt}

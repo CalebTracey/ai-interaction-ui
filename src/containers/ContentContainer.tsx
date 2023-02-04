@@ -6,6 +6,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../components/ErrorFallback'
 import ResultsContainer from './ResultsContainer'
 import Header from '../components/Header'
+import { GrowSpinner } from '../components/GrowSpinner'
 
 const placeholder = 'Two bears fighting aliens with light sabers'
 const defaultSize = '1024x1024'
@@ -42,7 +43,7 @@ export const Content = (): JSX.Element => {
 
     setIsLoading(true)
 
-    const s = Service.Post({ request: req })
+    Service.Post({ request: req })
       .then((res: ResponseI | undefined) => {
         if (res?.result) {
           if (res.result.data.length == 0) {
@@ -53,6 +54,7 @@ export const Content = (): JSX.Element => {
           setResult(res.result)
           setAlert({ type: 'success', message: 'Success!' })
         }
+        return
       })
       .finally(() => setIsLoading(false))
 
@@ -62,12 +64,15 @@ export const Content = (): JSX.Element => {
   return (
     <div className='content'>
       <Header />
-      <ResultsContainer
-        isLoading={isLoading}
-        alert={alert}
-        result={result}
-        showAlert={showAlert}
-      />
+      <div className='upper-content'>
+        {isLoading ? (
+          <GrowSpinner />
+        ) : (
+          <h1>
+            <span>:)</span>
+          </h1>
+        )}
+      </div>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <InputFormContainer
           setIsLoading={setIsLoading}
@@ -80,6 +85,14 @@ export const Content = (): JSX.Element => {
           placeholder={placeholder}
         />
       </ErrorBoundary>
+      {result ? (
+        <ResultsContainer
+          isLoading={isLoading}
+          alert={alert}
+          result={result}
+          showAlert={showAlert}
+        />
+      ) : null}
     </div>
   )
 }

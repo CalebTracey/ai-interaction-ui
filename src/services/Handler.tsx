@@ -1,3 +1,7 @@
+import { MouseEvent } from 'react'
+
+const smooth: ScrollIntoViewOptions = { behavior: 'smooth' }
+
 const Clear = (props: ClearI): void => {
   const { setPrompt, setResult, setIsLoading } = props
   setPrompt()
@@ -9,6 +13,12 @@ const Clear = (props: ClearI): void => {
   return
 }
 
-const Handler = { Clear }
+const ScrollToId = (e: MouseEvent<HTMLButtonElement>, id: string): void => {
+  e.preventDefault()
+
+  document.getElementById(id)?.scrollIntoView(smooth)
+}
+
+const Handler = { Clear, ScrollToId }
 
 export default Handler

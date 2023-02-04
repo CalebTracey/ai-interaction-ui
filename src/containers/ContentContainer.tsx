@@ -1,35 +1,29 @@
 import React, { FormEvent, useEffect, useState } from 'react'
-import { Alert } from 'react-bootstrap'
-import { InputFormContainer } from './InputFormContainer'
+// import { InputFormContainer } from './InputFormContainer'
 import Service from '../services/Service'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../components/ErrorFallback'
 import ResultsContainer from './ResultsContainer'
-import Header from '../components/Header'
-import { GrowSpinner } from '../components/GrowSpinner'
+import FaceContainer from './FaceContainer'
+import HeaderContainer from './HeaderContainer'
+import { InputForm } from '../components/InputForm'
 
 const placeholder = 'Two bears fighting aliens with light sabers'
 const defaultSize = '1024x1024'
 const defaultCount = 1
 const tenSeconds = 10000
 
+const testAlert: AlertT = { type: 'success', message: 'success message!' }
+
 export const Content = (): JSX.Element => {
   const [prompt, setPrompt] = useState<string>('')
   const [result, setResult] = useState<ResultI | undefined>(undefined)
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [alert, setAlert] = useState<AlertT | null>(null)
-
-  const showAlert = (key: string, variant: string): JSX.Element => {
-    return (
-      <Alert className='position-fixed' key={key} variant={variant}>
-        <span>success</span>
-      </Alert>
-    )
-  }
+  const [alert, setAlert] = useState<AlertT | undefined>(testAlert)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setAlert(null)
+      setAlert(undefined)
     }, tenSeconds)
 
     return () => clearTimeout(timer)
@@ -60,38 +54,40 @@ export const Content = (): JSX.Element => {
 
     return e.currentTarget.reset()
   }
+  const [respCount, setRespCount] = useState(0)
+
+  useEffect(() => {
+    if (result && result?.data) {
+      if (result?.data.length !== null) {
+        setRespCount(result.data.length)
+      }
+    }
+  }, [result])
 
   return (
     <div className='content'>
-      <Header />
       <div className='upper-content'>
-        {isLoading ? (
-          <GrowSpinner />
-        ) : (
-          <h1>
-            <span>:)</span>
-          </h1>
-        )}
+        <HeaderContainer alert={alert} />
+        <FaceContainer isLoading={isLoading} respCount={respCount} />
       </div>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <InputFormContainer
-          setIsLoading={setIsLoading}
-          setResult={setResult}
-          result={result}
-          isLoading={isLoading}
-          setPrompt={setPrompt}
-          prompt={prompt}
-          handleSubmit={handleSubmit}
-          placeholder={placeholder}
-        />
+        <div className='grid-half__input align-items-center'>
+          <InputForm
+            respCount={respCount}
+            setRespCount={setRespCount}
+            setIsLoading={setIsLoading}
+            setResult={setResult}
+            result={result}
+            isLoading={isLoading}
+            setPrompt={setPrompt}
+            prompt={prompt}
+            handleSubmit={handleSubmit}
+            placeholder={placeholder}
+          />
+        </div>
       </ErrorBoundary>
       {result ? (
-        <ResultsContainer
-          isLoading={isLoading}
-          alert={alert}
-          result={result}
-          showAlert={showAlert}
-        />
+        <ResultsContainer isLoading={isLoading} result={result} />
       ) : null}
     </div>
   )

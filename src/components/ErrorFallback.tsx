@@ -4,12 +4,12 @@ import { FallbackProps } from 'react-error-boundary'
 
 export const ErrorFallback: FC<FallbackProps> = (props: FallbackProps): any => {
   const { error, resetErrorBoundary } = props
-  // const [show, setShow] = useState(true)
 
   const handleClose = (): void => {
     console.error('=== ERROR FALLBACK ===')
     resetErrorBoundary()
   }
+
   return (
     <div
       className='error-fallback modal show grid-half'

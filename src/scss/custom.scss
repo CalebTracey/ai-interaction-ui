@@ -97,7 +97,15 @@ img {
   display: grid;
   overflow: scroll;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 3rem calc(50% - 3rem) calc(50% - 3rem);
+  // grid-template-rows: 3rem calc(50% - 3rem) calc(50% - 3rem);
+  grid-template-rows: 50% 50%;
+}
+
+.face-container {
+  font-size: 3rem;
+  grid-column: 1 / spread 4;
+  display: grid;
+  place-content: center;
 }
 
 .grid-container {
@@ -113,21 +121,25 @@ img {
   grid-template-columns: repeat(4, 1fr);
 
   &__content {
-    grid-row: 4;
+    grid-row: 3;
     grid-column: 1/ 5;
   }
 
   &__input {
-    grid-row: 3;
-    grid-column: 2/4;
+    grid-column: 2 / 4;
   }
 }
 
-.upper-content {
-  grid-row: 2;
-  grid-column: 1/5;
-  place-content: center;
+.landing-message {
+  grid-column: 1 / spread 4;
   display: grid;
+  place-items: center;
+}
+
+.upper-content {
+  grid-column: 1 / spread;
+  display: grid;
+  grid-template-rows: 10% 90%;
 }
 
 .flex-container-centered {
@@ -139,33 +151,38 @@ img {
 }
 
 .form-input-container {
-  margin-top: 0;
-  margin-bottom: auto;
-  height: 100%;
-  padding: 0 6rem 0 6rem;
-  display: grid;
-  place-content: baseline;
-  grid-gap: 2rem;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding: 0 3rem 0 3rem;
+}
+
+.header-container {
+  grid-column: 1 / spread 4;
+}
+
+.header-item-container {
+  text-align: center;
+  margin: 0;
+  padding: 0 0.5rem 0 0.5rem;
+  border-radius: 10px;
+  background-color: $secondary-background-color;
 }
 
 //      ==================
 //*     === Components ===
 //      ==================
 
+.header-alert {
+  padding: 0 0.5rem 0 0.5rem;
+  margin: 0;
+  height: 100%;
+}
+
 .header-content {
   display: flex;
   gap: 2rem;
   padding: 0.5rem;
   height: 100%;
-}
-
-.header-item-container {
-  text-align: center;
-  // margin: .5rem;
-  padding: 0 0.5rem 0 0.5rem;
-  border-radius: 10px;
-  background-color: $secondary-background-color;
 }
 
 .error-fallback {
@@ -190,15 +207,13 @@ img {
 }
 
 .form-button {
-  // grid-column: 2;
-  // margin: 3rem 2rem 0 2rem;
   @extend %border-style;
   color: $text-color-dark;
   border: $border-light;
-
+  padding: 0 2rem 0 2rem;
   &:hover {
     @extend %border-style;
-    // color: $text-color-dark;
+    padding: 0 2rem 0 2rem;
     color: rgba($text-color, 0.75);
     border: $border-light;
   }
@@ -225,5 +240,20 @@ img {
 }
 
 .scroll-button {
-  margin: 30%;
+  @extend %border-style;
+  color: $text-color-dark;
+  border: $border-light;
+  background-color: rgba(#72b01d, 0.6);
+  margin: 20% 40% 0 40%;
+
+  &:hover {
+    @extend %border-style;
+    background-color: rgba(#72b01d, 0.8);
+    color: rgba($text-color, 0.75);
+    border: $border-light;
+  }
+}
+
+.image-container {
+  max-height: 100vh;
 }

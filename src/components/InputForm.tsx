@@ -1,17 +1,11 @@
-import React, {
-  ChangeEvent,
-  SetStateAction,
-  Dispatch,
-  FormEvent,
-  useState,
-  MouseEvent,
-} from 'react'
-import { Button, Form, InputGroup } from 'react-bootstrap'
+import React, { ChangeEvent, SetStateAction, Dispatch, FormEvent } from 'react'
+import { Form, InputGroup } from 'react-bootstrap'
+import ContentButtonContainer from '../containers/ContentButtonContainer'
 import Handler from '../services/Handler'
-import ClearButton from './buttons/ClearButton'
-import DownloadButton from './buttons/DownloadButton'
+import ScrollResultButton from './buttons/ScrollResultButton'
 import SubmitButton from './buttons/SubmitButton'
 
+// const resultContainerId = 'results-container'
 interface Props {
   result: ResultI | undefined
   respCount: number
@@ -33,7 +27,6 @@ export const InputForm = (props: Props): JSX.Element => {
     isLoading,
     setPrompt,
     placeholder,
-    prompt,
     handleSubmit,
     setIsLoading,
     setResult,
@@ -48,18 +41,6 @@ export const InputForm = (props: Props): JSX.Element => {
     }, 1000)
 
     return () => clearTimeout(timer)
-  }
-
-  const scrollHandler = (e: MouseEvent<HTMLButtonElement>): void => {
-    console.log('scroll')
-    document
-      .getElementById('results-container')
-      ?.scrollIntoView({ behavior: 'smooth' })
-    // e.currentTarget.scrollTo({ top: -200, behavior: 'smooth' })
-    // window.scrollTo({
-    //   top: -200,
-    //   behavior: 'smooth',
-    // })
   }
 
   const handleClear = (): void => {
@@ -87,27 +68,15 @@ export const InputForm = (props: Props): JSX.Element => {
             placeholder={placeholder}
           />
         </Form.FloatingLabel>
-
-        <>
-          {respCount === 0 ? <SubmitButton isLoading={isLoading} /> : null}
-          {/* {console.log('=== RESP COUNT: ' + respCount)} */}
-          {respCount !== undefined ? (
-            <>
-              {respCount > 0 ? (
-                <ClearButton clearHandler={handleClear} />
-              ) : null}
-              {respCount > 0 && !isLoading ? (
-                <DownloadButton result={result} />
-              ) : null}
-            </>
-          ) : null}
-        </>
+        {respCount === 0 ? <SubmitButton isLoading={isLoading} /> : null}
+        <ContentButtonContainer
+          isLoading={isLoading}
+          respCount={respCount}
+          handleClear={handleClear}
+          result={result}
+        />
       </InputGroup>
-      {respCount !== 0 ? (
-        <Button className='scroll-button' onClick={scrollHandler}>
-          <span>Scroll Down</span>
-        </Button>
-      ) : null}
+      <ScrollResultButton respCount={respCount} />
     </Form>
   )
 }

@@ -1,4 +1,5 @@
 import { Button } from 'react-bootstrap'
+import { GrowSpinner } from '../GrowSpinner'
 
 interface Props {
   isLoading: boolean
@@ -14,7 +15,7 @@ const SubmitButton = (props: Props): JSX.Element => {
       type='submit'
       disabled={isLoading}
     >
-      <span>Submit</span>
+      {isLoading ? <GrowSpinner /> : <span>Submit</span>}
     </Button>
   )
 }

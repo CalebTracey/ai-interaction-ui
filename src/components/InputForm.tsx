@@ -52,23 +52,6 @@ export const InputForm = (props: Props): JSX.Element => {
     return () => clearTimeout(timer)
   }
 
-  const handleClear = (): void => {
-    Handler.Clear({
-      setIsLoading,
-      setPrompt,
-      setResult,
-    })
-    setRespCount(0)
-  }
-
-  const handleFormFocus = (): void => {
-    setLabel(focusLabel)
-  }
-
-  const handleFormBlur = (): void => {
-    setLabel(defaultLabel)
-  }
-
   return (
     <Form className='form-input-container' onSubmit={handleSubmit}>
       <InputGroup>
@@ -76,8 +59,8 @@ export const InputForm = (props: Props): JSX.Element => {
           controlId='floatingInput'
           label={label}
           className='floating-label'
-          onBlur={handleFormBlur}
-          onFocus={handleFormFocus}
+          onBlur={() => setLabel(defaultLabel)}
+          onFocus={() => setLabel(focusLabel)}
         >
           <Form.Control
             onChange={handleOnChange}
@@ -91,7 +74,14 @@ export const InputForm = (props: Props): JSX.Element => {
         <ContentButtonContainer
           isLoading={isLoading}
           respCount={respCount}
-          handleClear={handleClear}
+          handleClear={() => {
+            setRespCount(0)
+            Handler.Clear({
+              setIsLoading,
+              setPrompt,
+              setResult,
+            })
+          }}
           result={result}
         />
       </InputGroup>

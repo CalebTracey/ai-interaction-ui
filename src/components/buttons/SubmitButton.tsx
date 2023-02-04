@@ -15,7 +15,7 @@ const SubmitButton = (props: Props): JSX.Element => {
       type='submit'
       disabled={isLoading}
     >
-      {isLoading ? <GrowSpinner /> : <span>Submit</span>}
+      {isLoading ? <GrowSpinner /> : <span>submit</span>}
     </Button>
   )
 }

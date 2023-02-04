@@ -1,11 +1,16 @@
-import React, { ChangeEvent, SetStateAction, Dispatch, FormEvent } from 'react'
+import React, {
+  ChangeEvent,
+  SetStateAction,
+  Dispatch,
+  FormEvent,
+  useState,
+} from 'react'
 import { Form, InputGroup } from 'react-bootstrap'
 import ContentButtonContainer from '../containers/ContentButtonContainer'
 import Handler from '../services/Handler'
 import ScrollResultButton from './buttons/ScrollResultButton'
 import SubmitButton from './buttons/SubmitButton'
 
-// const resultContainerId = 'results-container'
 interface Props {
   result: ResultI | undefined
   respCount: number
@@ -32,6 +37,10 @@ export const InputForm = (props: Props): JSX.Element => {
     setResult,
   } = props
 
+  const defaultLabel = 'what would you like to see?'
+  const focusLabel = 'type here'
+  const [label, setLabel] = useState(defaultLabel)
+
   const handleOnChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): (() => void) => {
@@ -52,13 +61,23 @@ export const InputForm = (props: Props): JSX.Element => {
     setRespCount(0)
   }
 
+  const handleFormFocus = (): void => {
+    setLabel(focusLabel)
+  }
+
+  const handleFormBlur = (): void => {
+    setLabel(defaultLabel)
+  }
+
   return (
     <Form className='form-input-container' onSubmit={handleSubmit}>
       <InputGroup>
         <Form.FloatingLabel
           controlId='floatingInput'
-          label='What would you like to see?'
+          label={label}
           className='floating-label'
+          onBlur={handleFormBlur}
+          onFocus={handleFormFocus}
         >
           <Form.Control
             onChange={handleOnChange}

@@ -52,17 +52,19 @@ $header-font-color: #acc3a6;
 
 * {
   box-sizing: border-box;
+
 }
 
 html {
   height: 100%;
+  background: $background-gradient;
+
 }
 
 body {
   color: $text-color;
   letter-spacing: 0.5px;
   min-height: 100%;
-  background: $background-gradient;
 }
 
 header {
@@ -139,7 +141,7 @@ img {
 .upper-content {
   grid-column: 1 / spread;
   display: grid;
-  grid-template-rows: 10% 90%;
+  grid-template-rows: 15% 85%;
 }
 
 .flex-container-centered {
@@ -165,6 +167,8 @@ img {
   margin: 0;
   padding: 0 0.5rem 0 0.5rem;
   border-radius: 10px;
+  align-items: center;
+  display: flex;
   background-color: $secondary-background-color;
 }
 
@@ -235,6 +239,7 @@ img {
 .image-item {
   @extend %max-size;
   min-width: 0;
+  padding: 3rem;
   display: flex;
   justify-content: center;
 }
@@ -257,3 +262,13 @@ img {
 .image-container {
   max-height: 100vh;
 }
+
+@media only screen and (hover: none) and (pointer: coarse){
+  .grid-half__input {
+    grid-column: 1 / 6;
+  }
+
+  header {
+    font-size: .75rem;
+  }
+  }
